@@ -1,0 +1,62 @@
+<mat-dialog-content>
+    <div>
+        <mat-icon class="float-end hover" (click)="fecharModal()">close</mat-icon>
+        
+        <h1 *ngIf="!data" class="titulo">Cadastro de Professores</h1>
+        <h3 *ngIf="!data" class="subtitulo">Preencha o formulário para salvar o professor</h3>
+
+        <h1 *ngIf="data" class="titulo">Alterar Dados do Professor</h1>
+        <h3 *ngIf="data"class="subtitulo">Preencha o formulário para alterar os dados do professor</h3>        
+    </div>
+
+    <form [formGroup]="formProfessor">
+        <div class="row mt-3 mb-3">
+            <mat-form-field class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" hintLabel="Máximo 100 caracteres">
+                <mat-label>Nome</mat-label>
+                <input type="text" matInput formControlName="nome" placeholder="Digite seu nome" #nome>
+                <mat-hint align="end">{{nome.value.length}} / 100</mat-hint>
+                @if (formProfessor.controls['nome'].invalid) {
+                    <mat-error>Por favor digite um nome válido</mat-error>
+                }                
+            </mat-form-field>                
+        </div>
+
+        <div class="row mb-3">
+            <mat-form-field class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                <mat-label>Cep</mat-label>
+                <input type="text" matInput formControlName="cep" placeholder="Digite seu cep">
+                @if (formProfessor.controls['cep'].invalid) {
+                    <mat-error>Por favor digite um cep válido</mat-error>
+                }                
+            </mat-form-field>                
+            <mat-form-field class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                <mat-label>Logradouro</mat-label>
+                <input type="text" matInput formControlName="logradouro" placeholder="Digite seu logradouro">
+                @if (formProfessor.controls['logradouro'].invalid) {
+                    <mat-error>Por favor digite um logrdouro válido</mat-error>
+                }                
+            </mat-form-field>                
+            <mat-form-field class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                <mat-label>Número</mat-label>
+                <input type="text" matInput formControlName="numero" placeholder="Nº">
+                @if (formProfessor.controls['numero'].invalid) {
+                    <mat-error>Por favor digite um número válido</mat-error>
+                }                
+            </mat-form-field>                
+        </div>  
+        
+        <div class="row mb-3">
+            <mat-form-field class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                <mat-label>Bairro</mat-label>
+                <input type="text" matInput formControlName="bairro" placeholder="Digite seu bairro">
+                @if (formProfessor.controls['bairro'].invalid) {
+                    <mat-error>Por favor digite um bairro válido</mat-error>
+                }
+            </mat-form-field>                
+        </div>  
+        <div>
+            <button mat-flat-button class="float-end" [disabled]="formProfessor.invalid" (click)="salvar()">Salvar Professor</button>
+        </div>                  
+    </form>
+
+</mat-dialog-content>
