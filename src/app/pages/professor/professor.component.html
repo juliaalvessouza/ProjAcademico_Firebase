@@ -17,24 +17,8 @@
               <input matInput (keyup)="aplicarFiltro($event)" placeholder="Digite sua busca" #input>
           </mat-form-field>     
 
-          <mat-form-field class="campo-pesquisa">
-            <mat-label>Filtro (Backend Exato)</mat-label>
-            <input matInput (keyup)="aplicarFiltroBackendExato($event)" placeholder="Digite sua busca (Nome Exato)" #input>
-          </mat-form-field>  
-          
-          <mat-form-field class="campo-pesquisa">
-            <mat-label>Filtro (Backend Começa com...)</mat-label>
-            <input matInput (keyup)="aplicarFiltroBackendQueComeceCom($event)" placeholder="Digite sua busca (Nome que comece com...)" #input>
-          </mat-form-field>                 
-          
           <div class="mat-elevation-z8">
               <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
-
-                <!-- Id -->
-                <ng-container matColumnDef="id">
-                  <th class="th-table" mat-header-cell *matHeaderCellDef> Id </th>
-                  <td class="td-table" mat-cell *matCellDef="let professor"> {{professor.id}} </td>
-                </ng-container>                    
             
                 <!-- Nome -->
                 <ng-container matColumnDef="nome">
@@ -66,7 +50,7 @@
                   <td class="td-table" mat-cell *matCellDef="let professor">
                       <mat-icon class="icone-tabela" (click)="exibirModalVisualizacaoProfessor(professor)">visibility</mat-icon>
                       <mat-icon class="icone-tabela" (click)="exibirModalEdicaoProfessor(professor)">edit</mat-icon>
-                      <mat-icon class="icone-tabela" (dblclick)="excluir(professor.id)">delete</mat-icon>
+                      <mat-icon class="icone-tabela" (click)="excluir(professor.id)">delete</mat-icon>
                   </td>
                 </ng-container>
             
@@ -78,7 +62,7 @@
                 </tr>
               </table>
             
-              <mat-paginator [pageSizeOptions]="[2, 3, 5, 7]"
+              <mat-paginator [pageSizeOptions]="[10,20,30]"
                             showFirstLastButtons
                             aria-label="Registros por Páginas">
               </mat-paginator>

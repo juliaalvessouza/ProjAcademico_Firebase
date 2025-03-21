@@ -1,51 +1,46 @@
 import { Injectable } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
-import { initializeApp } from 'firebase/app';
-import { environment } from '../../environments/environment.development';
-import { addDoc, collection, deleteDoc, doc, getFirestore, updateDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { Professor } from '../interfaces/professor';
-
+import { addDoc, collection, collectionData, CollectionReference, Firestore, doc, updateDoc , deleteDoc, where, query} from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class ProfessorService {
+  private professoresCollection: CollectionReference;
 
-  constructor(
-    private firestore: Firestore
-  ) { }
-
-  listar(){
-    let app = initializeApp(environment.firebaseConfig);
-    let db = getFirestore(app);
-
-    const professoresCollection  = collection(db, 'professores');
-    return collectionData(professoresCollection) as Observable<Professor[]>;
+  constructor(private firestore: Firestore) {
+    this.professoresCollection = collection(this.firestore, 'professores');
   }
 
-  adicionar(professor: Professor){
-    let app = initializeApp(environment.firebaseConfig);
-    let db = getFirestore(app);
-
-    const professoresCollection  = collection(db, 'professores');
-    return addDoc(professoresCollection,  professor);
+  listar() {
+    return collectionData(this.professoresCollection, { idField: 'id' }) as Observable<Professor[]>;
   }
 
-  editar(usuarioId: string, professor: Professor){
-    let app = initializeApp(environment.firebaseConfig);
-    let db = getFirestore(app);
-
-    const professorDoc = doc(db, `professores/${usuarioId}`);
-    return updateDoc(professorDoc, {...professor});
-
+  async adicionar(professor: Professor) {
+    return await addDoc(this.professoresCollection, professor);
   }
 
-  excluir(usuarioId: string){
-    let app = initializeApp(environment.firebaseConfig);
-    let db = getFirestore(app);
-
-    const professorDoc = doc(db, `professores/${usuarioId}`);
-    return deleteDoc(professorDoc);
-
+   async atualizar(id: string, professor: Professor) {
+    const professorDoc = doc(this.firestore, `professores/${id}`);
+    return await updateDoc(professorDoc, {...professor});    
   }
+
+  async excluir(id: string) {
+    const professorDoc = doc(this.firestore, `professores/${id}`);
+    return await deleteDoc(professorDoc);      
+  }
+
+  buscarPorNome(nome: string) {
+    if (!nome) {
+      return this.listar();
+    }
+
+    const filtro = query(
+      this.professoresCollection, 
+      where('nome', '>=', nome),
+      where('nome', '<', nome + '\uf8ff')
+    );
+    return collectionData(filtro, {idField: 'id'}) as Observable<Professor[]>;
+  }     
 }
+

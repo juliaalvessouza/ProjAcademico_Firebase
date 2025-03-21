@@ -47,30 +47,31 @@ export class ModalProfessorAdicaoEdicaoComponent implements OnInit {
     this.dialogRef.close();
   }
 
-   salvar() {
-  //   const dadosFormulario = this.formProfessor.getRawValue();
+  salvar() {
+    const dadosFormulario = this.formProfessor.getRawValue();
 
-  //   if (this.data) {
-  //     this.professorService.atualizar(this.data.id!, dadosFormulario)
-  //     .then(() => {
-  //       alert('Professor atualizado com sucesso!');
-  //       this.fecharModal();
-  //     })
-  //     .catch(error => {
-  //       alert('Erro ao atualizar professor!');
-  //       console.error(error);
-  //     })      
+    if (this.data) {
+      this.professorService.atualizar(this.data.id!, dadosFormulario)
+      .then(() => {
+        alert('Professor atualizado com sucesso!');
+        this.fecharModal();
+      })
+      .catch(error => {
+        alert('Erro ao atualizar professor!');
+        console.error(error);
+      })      
 
-  //   } else {
-  //     this.professorService.adicionar(dadosFormulario)
-  //     .then(() => {
-  //       alert('Professor cadastrado com sucesso!');
-  //       this.fecharModal();
-  //     })
-  //     .catch(error => {
-  //       alert('Erro ao cadastrar professor!');
-  //       console.error(error);
-  //     })  
-  //   }    
+    } else {
+      this.professorService.adicionar(dadosFormulario)
+      .then(() => {
+        alert('Professor cadastrado com sucesso!');
+        this.fecharModal();
+      })
+      .catch(error => {
+        alert('Erro ao cadastrar professor!');
+        console.error(error);
+      })  
+    }    
    }
+   
 }

@@ -29,7 +29,7 @@ export class ProfessorComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog
   ) { }
 
-  displayedColumns: string[] = ['id', 'nome', 'cep', 'logradouro', 'numero', 'acao'];
+  displayedColumns: string[] = ['nome', 'cep', 'logradouro', 'numero', 'acao'];
 
   dataSource = new MatTableDataSource<Professor>();
 
@@ -50,37 +50,18 @@ export class ProfessorComponent implements OnInit, AfterViewInit {
   
   aplicarFiltro(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim();
-  }
-  
-  aplicarFiltroBackendExato(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.professorService.buscarPorNomeExato(filterValue).subscribe({
-    //   next: (response) => {            
-    //     this.dataSource = new MatTableDataSource(response);
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;            
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //   }  
-    // });      
+    this.professorService.buscarPorNome(filterValue).subscribe({
+      next: (response) => {    
+       
+        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;            
+      },
+      error: (error) => {
+        console.error(error);
+      }  
+    });      
   }  
-  
-  aplicarFiltroBackendQueComeceCom(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.professorService.buscarPorNomeQueComeceCom(filterValue).subscribe({
-    //   next: (response) => {            
-    //     this.dataSource = new MatTableDataSource(response);
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;            
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //   }  
-    // });      
-  }  
-  //-----
 
   exibirModalVisualizacaoProfessor(professor: Professor) {
     this.dialog.open(ModalProfessorVisualizacaoComponent, {
@@ -96,7 +77,7 @@ export class ProfessorComponent implements OnInit, AfterViewInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '80%'
-    }) //.afterClosed().subscribe(() => this.listarProfessores());  (Usar somente quando for um banco dedas relacional com API em .NET ou JAVA)
+    }) //.afterClosed().subscribe(() => this.listarProfessores());  (Usar somente quando for um banco relacional com API em .NET ou JAVA)
   }  
 
   exibirModalEdicaoProfessor(professor: Professor) {
@@ -105,7 +86,7 @@ export class ProfessorComponent implements OnInit, AfterViewInit {
       maxHeight: '100vh',
       width: '80%',
       data: professor
-    }) //.afterClosed().subscribe(() => this.listarProfessores());  (Usar somente quando for um banco dedas relacional com API em .NET ou JAVA)
+    })
   }  
 
   listarProfessores() {
@@ -122,13 +103,15 @@ export class ProfessorComponent implements OnInit, AfterViewInit {
   }
 
   excluir(id: string) {
-    this.professorService.excluir(id)
-    .then(() => {
-      alert('Professor excluído com sucesso!');
-    })
-    .catch(error => {
-      alert('Erro ao excluir professor!'); 
-      console.error(error)
-    });
-  }  
+    if (confirm('Tem certeza que deseja excluir este professor?')) {
+      this.professorService.excluir(id)
+        .then(() => {
+          alert('Professor excluído com sucesso!');
+        })
+        .catch(error => {
+          alert('Erro ao excluir professor!'); 
+          console.error(error);
+        });
+    }
+  }
 }
