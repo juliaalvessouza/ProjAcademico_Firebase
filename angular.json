@@ -75,7 +75,8 @@
               "buildTarget": "proj-academico:build:production"
             },
             "development": {
-              "buildTarget": "proj-academico:build:development"
+              "buildTarget": "proj-academico:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +96,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/public",
+                "output": "assets/"
               }
             ],
             "styles": [

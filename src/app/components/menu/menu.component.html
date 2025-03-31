@@ -1,7 +1,7 @@
 <nav class="sidemenu">
     <ul>
         <li>
-            <img src="/assets/images/logo.png" width="40px">
+            <img src="assets/images/logo.png" width="40px">
             <span class="logo">Sistema Acadêmico</span>
         </li>
         <li routerLink="/home">
@@ -10,9 +10,11 @@
         <li routerLink="/professor">
             <mat-icon>person-add</mat-icon>Casdastrar Professores
         </li>
+        <li routerLink="/aluno">
+            <mat-icon>person-add</mat-icon>Casdastrar Alunos
+        </li>
         <li routerLink="/login">
-            <!-- <mat-icon (click)="logout()">logout</mat-icon>Sair -->
-            <mat-icon>logout</mat-icon>Sair
+            <mat-icon (click)="logout()">logout</mat-icon>Sair
         </li>
     </ul>
 </nav>

@@ -1,0 +1,8 @@
+{
+    "/api": {
+      "target": "https://identitytoolkit.googleapis.com",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  

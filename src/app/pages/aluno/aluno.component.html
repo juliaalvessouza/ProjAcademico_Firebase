@@ -1,0 +1,72 @@
+<app-menu></app-menu>
+
+<div class="container-fluid pt-3">
+  <div class="row">
+      <div class="col-12">
+          <h1 class="titulo">Cadastro de Alunos</h1>
+          <h2 class="subtitulo">Gerencie alunos, adicionando, editando ou excluindo</h2>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-12">
+          <button class="float-end" mat-flat-button (click)="exibirModalAdicaoAluno()">Novo Aluno</button>
+
+          <mat-form-field class="campo-pesquisa">
+              <mat-label>Filtro</mat-label>
+              <input matInput (keyup)="aplicarFiltro($event)" placeholder="Digite sua busca" #input>
+          </mat-form-field>     
+
+          <div class="mat-elevation-z8">
+              <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
+            
+                <!-- Nome -->
+                <ng-container matColumnDef="nome">
+                  <th class="th-table" mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                  <td class="td-table" mat-cell *matCellDef="let aluno"> {{aluno.nome}} </td>
+                </ng-container>
+            
+                <!-- Cep -->
+                <ng-container matColumnDef="cep">
+                  <th class="th-table" mat-header-cell *matHeaderCellDef mat-sort-header> Cep </th>
+                  <td class="td-table" mat-cell *matCellDef="let aluno"> {{aluno.cep}} </td>
+                </ng-container>
+            
+                <!-- Logradouro -->
+                <ng-container matColumnDef="logradouro">
+                  <th class="th-table" mat-header-cell *matHeaderCellDef mat-sort-header> Logradouro </th>
+                  <td class="td-table" mat-cell *matCellDef="let aluno"> {{aluno.logradouro}} </td>
+                </ng-container>
+            
+                <!-- Número -->
+                <ng-container matColumnDef="numero">
+                  <th class="th-table" mat-header-cell *matHeaderCellDef mat-sort-header> Número </th>
+                  <td class="td-table" mat-cell *matCellDef="let aluno"> {{aluno.numero}} </td>
+                </ng-container>
+
+                <!-- Ação -->
+                <ng-container matColumnDef="acao">
+                  <th class="th-table" mat-header-cell *matHeaderCellDef> </th>
+                  <td class="td-table" mat-cell *matCellDef="let aluno">
+                      <mat-icon class="icone-tabela" (click)="exibirModalVisualizacaoAluno(aluno)">visibility</mat-icon>
+                      <mat-icon class="icone-tabela" (click)="exibirModalEdicaoAluno(aluno)">edit</mat-icon>
+                      <mat-icon class="icone-tabela" (click)="excluir(aluno.id)">delete</mat-icon>
+                  </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">Não foram encontrados dados para a pesquisa "{{input.value}}"</td>
+                </tr>
+              </table>
+            
+              <mat-paginator [pageSizeOptions]="[10,20,30]"
+                            showFirstLastButtons
+                            aria-label="Registros por Páginas">
+              </mat-paginator>
+            </div>
+      </div>
+  </div>
+</div>

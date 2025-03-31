@@ -1,1 +1,9 @@
 <app-menu></app-menu>
+
+<div class="container">
+    <div class="d-flex flex-column align-items-center p-4 border rounded shadow-sm bg-light">
+        <img [src]="usuario?.photoURL" alt="Foto do Perfil Google" class="rounded-circle shadow mb-3" width="120" height="120">  
+        <h1 class="h4 text-primary">{{ usuario?.displayName }}</h1>
+         <h2 class="h6 text-muted">{{ usuario?.email }}</h2> 
+    </div>
+</div>
